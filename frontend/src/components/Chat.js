@@ -13,20 +13,30 @@ class Chat extends Component{
             ENDPOINT:"localhost:5000",
             messages:[],
         };
-        this.socket=socketio.connect(this.state.ENDPOINT);
+        this.socket=null;
+        const {handle,room}=queryString.parse(this.props.history.location.search);
+        this.info = { handle, room };
     }
 
     componentDidMount(){
-        const {handle,room}=queryString.parse(this.props.history.location.search);
-        
+        const {handle,room}=this.info;
+        this.socket = socketio.connect(this.state.ENDPOINT);
         this.socket.on("hello",()=>{
             console.log("server said hello")
         })
         this.socket.emit("JOIN", {handle,room});
+        this.socket.on('RECIEVE', (message)=>{
+            const newMessages = [...this.state.messages];
+            newMessages.push(message);
+            this.setState({
+                messages: newMessages,
+            });
+        })
     }
 
-    sendMessage = (data) => {
-        this.socket.emit("SEND_MESSAGE",data);
+    sendMessage = (text) => {
+        const {handle,room} = this.info;
+        this.socket.emit("SEND",{text,handle,room});
     }
 
     render(){
@@ -35,7 +45,7 @@ class Chat extends Component{
             <div className="wrapper">
                 <div className="main-chat">
                 <InfoBar room={room}></InfoBar>
-                <Messages messageslist={this.state.messages} name={handle}></Messages>
+                <Messages messageslist={this.state.messages} handle={handle}></Messages>
                 <InputComp sendMessage={this.sendMessage}/>
                 </div>
             </div>    

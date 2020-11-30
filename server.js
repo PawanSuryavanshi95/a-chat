@@ -17,19 +17,38 @@ app.get('/', (req, res) => {
 });
 
 var users = [];
-var count=0;
 
 io.on('connection', (socket)=>{
     console.log("We got ourselves a connection.");
     io.sockets.emit("hello");
-    socket.on('JOIN',(data)=>{
-        users.push({id:++count, handle:data.handle});
+    
+    socket.on('JOIN', (data)=>{
+        users.push({id:socket.id, handle:data.handle});
+        console.log(users);
     });
+
+    socket.on('SEND', ({text,handle,room})=>{
+        console.log(text,handle,room);
+        for(var i=0;i < users.length;i++){
+            /*if(users[i].id!==socket.id){
+
+            }*/
+            io.to(users[i].id).emit('RECIEVE', { user:handle, text });
+        }
+    });
+
     socket.on('disconnect', () => {
+        users.filter(user=>{
+            return user.id!==socket.id;
+        })
         console.log('user disconnected');
     });
     
 });
+
+app.get('/users',(req,res)=>{
+    res.send(users);
+})
 
 server.listen(port, ()=>{
     console.log(`Server started at port ${port}`);

@@ -20,7 +20,7 @@ class Home extends Component{
                         <div className=" join-container d-flex flex-column align-items-center">
                             <p>Enter Your Nickname! </p>
                             <input className="nickname" placeholder="Name" type="text" onChange={(e)=>this.setState({"handle":e.target.value})}/>
-                            <Link to={`/chat?handle=${handle}&room=${room}`}>
+                            <Link to={`/chat?handle=${handle}`}>
                                 <Button type="submit" className="match">Find my Match!</Button>
                             </Link>
                         </div>

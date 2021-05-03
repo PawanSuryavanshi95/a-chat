@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactEmoji from 'react-emoji'
 
-const Message=({message:{user,text},handle})=>{
-    
+const Message=({message:{user,text,self},handle})=>{
+    var align = self===true?'right':'left';
     return(
         <div>
-            <p>{user}</p>
-            <p>{ReactEmoji.emojify(text)}</p>
+            {self===true?null:<p>{user}</p>}
+            <p style={{textAlign: align}}>{ReactEmoji.emojify(text)}</p>
         </div>
     )
     

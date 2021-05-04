@@ -43,7 +43,7 @@ class Messages extends Component{
         return(
             <div className="message-grp">
                 {messageslist.map((message)=>{
-                    var bool = prev==message.user;
+                    var bool = prev===message.user;
                     prev = message.user;
                     return (
                         <div key={i++}><Message message={message} sent={message.self && j<=this.state.len2} read={i<=this.state.len} bool={bool}></Message></div>

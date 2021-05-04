@@ -28,7 +28,12 @@ class Chat extends Component{
 
     componentDidMount(){
         const {handle}=this.info;
-        this.socket = socketio.connect(this.state.ENDPOINT);
+        this.socket = socketio.connect(this.state.ENDPOINT,{
+            withCredentials: true,
+            extraHeaders: {
+                "my-custom-header": "abcd"
+            }
+        });
         this.socket.on("hello",()=>{
             console.log("server said hello")
         })

@@ -7,15 +7,18 @@ var cors = require('cors');
 const app = express();
 
 const cors_white_list = ["https://epic-newton-301ecc.netlify.app/","https://epic-newton-301ecc.netlify.app", "http://localhost:3000/", "http://localhost:3000"];
-app.use(cors({
+/*app.use(cors({
     origin:cors_white_list,
     credentials:false,
-  }))
+  }))*/
 const server = http.createServer(app);
 const io = socketio(server,{
     cors: {
-        origin: ['https://epic-newton-301ecc.netlify.app/','http://localhost:3000',],
-      }
+        origin: cors_white_list,
+      },
+    methods: ["GET", "POST"],
+    allowedHeaders: ["my-custom-header"],
+    credentials: true,
 });
 
 const port = process.env.PORT || 5000;

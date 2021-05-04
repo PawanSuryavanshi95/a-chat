@@ -1,15 +1,14 @@
 import React from 'react';
-import ReactEmoji from 'react-emoji'
 
-const Message=({message:{user,text,self},sent,read})=>{
-    var align = self===true?'right':'left';
+const Message=({message:{user,text,self},sent,read,bool})=>{
     return(
         <div>
-            {self===true?null:<p>{user}</p>}
-            <p style={{textAlign: align}}>{ReactEmoji.emojify(text + (self?sent?' (sent)':' (unsent)':'') +  (self?read?' (read)':' (unread)':''))}</p>
+            {self?null: bool? null :<div className="message-badge">{user.slice(0,1)}</div>}
+            <div className={`message-text${self?' user-msg':''}`}>
+            {(text + (self?sent?' (sent)':' (unsent)':'') +  (self?read?' (read)':' (unread)':''))}
+            </div>
         </div>
     )
-    
 }
 
 export default Message;

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ScrollToBottom from 'react-scroll-to-bottom';
 import Message from './MessageComponent';
 
 class Messages extends Component{
@@ -37,13 +36,20 @@ class Messages extends Component{
     }
 
     render(){
-        var i=1,j=1;
-        console.log(this.props.messageslist);
         var {messageslist} = this.props;
+        var i=1, j=1, prev='';
+        console.log(this.props.messageslist);
+
         return(
-            <ScrollToBottom>
-                {messageslist.map((message)=><div key={i++}><Message message={message} sent={message.self && j<=this.state.len2} read={i<=this.state.len}></Message></div>)}
-            </ScrollToBottom>
+            <div className="message-grp">
+                {messageslist.map((message)=>{
+                    var bool = prev==message.user;
+                    prev = message.user;
+                    return (
+                        <div key={i++}><Message message={message} sent={message.self && j<=this.state.len2} read={i<=this.state.len} bool={bool}></Message></div>
+                    )
+                })}
+            </div>
         )
     }
 }

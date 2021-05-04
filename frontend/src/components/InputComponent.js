@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import {Button,Form,Input} from 'reactstrap';
-
+import { InputGroup, InputGroupAddon, Input, Button } from 'reactstrap';
 class InputBar extends Component{
 
     constructor(props){
@@ -16,19 +15,21 @@ class InputBar extends Component{
 
     render(){
         return(
-            <Form onSubmit={(e)=>{this.submithandler(e)}}>
-                <div className="container">
-                    <div className="row">
-                        <Input className="col-10"
-                        type="text"
-                        placeholder="Type in message.."
-                        value={this.state.message}
-                        onChange={(e)=>{this.setState({message:e.target.value})}}
-                        />
-                        <Button className="col-1"variant="primary" onClick={(e)=>{this.submithandler(e)}}>Send</Button>
-                </div>
-                </div>
-            </Form>
+            <div className="input">
+                <form onSubmit={(e)=>{this.submithandler(e)}}>
+                    <InputGroup>
+                        <Input 
+                            type="text"
+                            placeholder="Type in message.."
+                            value={this.state.message}
+                            onChange={(e)=>{this.setState({message:e.target.value})}}
+                            />
+                        <InputGroupAddon addonType="append">
+                            <Button color="primary" onClick={(e)=>{this.submithandler(e)}}>Send</Button>
+                        </InputGroupAddon>
+                    </InputGroup>
+                </form>
+            </div>
         )
     }
 }

@@ -6,11 +6,11 @@ class Home extends Component{
 
     constructor(props){
         super(props);
-        this.state = { handle:"", room:"test" }
+        this.state = { handle:""}
     }
 
     render(){
-        const {handle, room} = this.state;
+        const {handle} = this.state;
         return(
             <div className="wrapper">
                 <div className="main">

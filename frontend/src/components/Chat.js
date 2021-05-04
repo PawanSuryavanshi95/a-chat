@@ -5,6 +5,8 @@ import InfoBar from './InfoBar';
 import InputComp from './InputComponent';
 import Messages from './MessagesComponent';
 import Waiting from './Waiting';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class Chat extends Component{
 
@@ -21,6 +23,7 @@ class Chat extends Component{
         const {handle}=queryString.parse(this.props.history.location.search);
         this.info = { handle};
         this.sentMSG = 0;
+        toast.configure();
     }
 
     componentDidMount(){
@@ -58,6 +61,7 @@ class Chat extends Component{
         }
         
         this.socket.on('ROOM_EMPTY', ()=>{
+            toast('User left :(');
             const newMessages = [];
             this.setState({
                 messages: newMessages,
@@ -86,17 +90,19 @@ class Chat extends Component{
     }
 
     render(){
-        const {handle,room} = queryString.parse(this.props.history.location.search);
+        const {room} = queryString.parse(this.props.history.location.search);
         console.log(this.state);
         return(
             <div className="wrapper">
                 <div className="main-chat">
+                
                 <InfoBar room={room}></InfoBar>
                 {this.state.connected===true?
-                    <div>
+                    <div className="messages-container">
                     <Messages messageslist={this.state.messages} socket={this.socket} ></Messages>
                     <InputComp sendMessage={this.sendMessage}/>
                     </div> : <Waiting />}
+                    
                 </div>
             </div>    
         )

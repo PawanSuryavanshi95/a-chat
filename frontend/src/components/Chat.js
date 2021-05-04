@@ -29,7 +29,7 @@ class Chat extends Component{
     componentDidMount(){
         const {handle}=this.info;
         this.socket = socketio.connect(this.state.ENDPOINT,{
-            withCredentials: true,
+            withCredentials: false,
             extraHeaders: {
                 "my-custom-header": "abcd"
             }

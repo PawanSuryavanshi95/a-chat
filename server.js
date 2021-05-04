@@ -18,7 +18,7 @@ const io = socketio(server,{
       },
     methods: ["GET", "POST"],
     allowedHeaders: ["my-custom-header"],
-    credentials: true,
+    credentials: false,
 });
 
 const port = process.env.PORT || 5000;

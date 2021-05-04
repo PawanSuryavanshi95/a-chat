@@ -73,16 +73,26 @@ io.on('connection', (socket)=>{
 
     socket.on('SEND', ({text,handle,msgID})=>{
         console.log(text,handle);
-        var userid = socket.id;
-        var buddies = rooms.get(userMap.get(userid).rID).users;
-        io.to(buddies[0]===socket.id?buddies[1]:buddies[0]).emit('RECIEVE', { user:handle, text })
-        io.to(userid).emit('SENT_RECIEPT', {msgID});
+        try{
+            var userid = socket.id;
+            var buddies = rooms.get(userMap.get(userid).rID).users;
+            io.to(buddies[0]===socket.id?buddies[1]:buddies[0]).emit('RECIEVE', { user:handle, text })
+            io.to(userid).emit('SENT_RECIEPT', {msgID});
+        }
+        catch(err) {
+            console.log(err.message);
+        }
     });
 
     socket.on('READ', ({len})=>{
-        var userid = socket.id;
-        var buddies = rooms.get(userMap.get(userid).rID).users;
-        io.to(buddies[0]===socket.id?buddies[1]:buddies[0]).emit('READ_RECIEPT', { len });
+        try{
+            var userid = socket.id;
+            var buddies = rooms.get(userMap.get(userid).rID).users;
+            io.to(buddies[0]===socket.id?buddies[1]:buddies[0]).emit('READ_RECIEPT', { len }); 
+        }
+        catch(err) {
+            console.log(err.message);
+        }
     });
 
     socket.on('CREATE_ROOM', (data)=>{

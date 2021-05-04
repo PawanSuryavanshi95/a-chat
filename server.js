@@ -2,12 +2,13 @@ const express = require('express');
 const socketio = require("socket.io");
 const http = require("http");
 var HashMap = require('hashmap');
+var cors = require('cors');
 
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server,{
     cors: {
-        origin: 'http://localhost:3000',
+        origin: ['http://localhost:3000','https://epic-newton-301ecc.netlify.app/'],
       }
 });
 

@@ -71,14 +71,22 @@ io.on('connection', (socket)=>{
         if(!createRoom(socket.id)) users.push(socket.id);
     });
 
-    socket.on('SEND', ({text,handle})=>{
+    socket.on('SEND', ({text,handle,msgID})=>{
         console.log(text,handle);
-        var buddies = rooms.get(userMap.get(socket.id).rID).users;
-        io.to(buddies[0]===socket.id?buddies[1]:buddies[0]).emit('RECIEVE', { user:handle, text });
+        var userid = socket.id;
+        var buddies = rooms.get(userMap.get(userid).rID).users;
+        io.to(buddies[0]===socket.id?buddies[1]:buddies[0]).emit('RECIEVE', { user:handle, text })
+        io.to(userid).emit('SENT_RECIEPT', {msgID});
+    });
+
+    socket.on('READ', ({len})=>{
+        var userid = socket.id;
+        var buddies = rooms.get(userMap.get(userid).rID).users;
+        io.to(buddies[0]===socket.id?buddies[1]:buddies[0]).emit('READ_RECIEPT', { len });
     });
 
     socket.on('CREATE_ROOM', (data)=>{
-        console.log('room requested');
+        console.log('room requested : ',socket.id);
         if(users.length>=2){
             createRoom(socket.id);
         }

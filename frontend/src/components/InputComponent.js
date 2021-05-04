@@ -8,17 +8,24 @@ class InputBar extends Component{
         this.state = { message:"" };
     }
 
+    submithandler = (e)=>{
+        e.preventDefault();
+        this.setState({message:""});
+        this.props.sendMessage(this.state.message);
+    }
+
     render(){
         return(
-            <Form>
+            <Form onSubmit={(e)=>{this.submithandler(e)}}>
                 <div className="container">
                     <div className="row">
                         <Input className="col-10"
                         type="text"
                         placeholder="Type in message.."
                         value={this.state.message}
-                        onChange={(e)=>{this.setState({message:e.target.value})}}/>
-                        <Button className="col-1"variant="primary" onClick={(e)=>{this.setState({message:""}); this.props.sendMessage(this.state.message); }}>Send</Button>
+                        onChange={(e)=>{this.setState({message:e.target.value})}}
+                        />
+                        <Button className="col-1"variant="primary" onClick={(e)=>{this.submithandler(e)}}>Send</Button>
                 </div>
                 </div>
             </Form>

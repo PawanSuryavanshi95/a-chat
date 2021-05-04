@@ -5,7 +5,7 @@ const InfoBar=({room})=>{
     <div className="container join-container-chat">
         <div className="row">
             <p >{room}</p>
-            <a classname="col-1 offset-1"href="/">
+            <a className="col-1 offset-1"href="/">
                 <Button className="exit" >Leave</Button>
             </a>
         </div>

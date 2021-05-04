@@ -4,6 +4,7 @@ import queryString from 'query-string';
 import InfoBar from './InfoBar';
 import InputComp from './InputComponent';
 import Messages from './MessagesComponent';
+import Waiting from './Waiting';
 
 class Chat extends Component{
 
@@ -19,6 +20,7 @@ class Chat extends Component{
         this.socket=null;
         const {handle}=queryString.parse(this.props.history.location.search);
         this.info = { handle};
+        this.sentMSG = 0;
     }
 
     componentDidMount(){
@@ -33,21 +35,27 @@ class Chat extends Component{
             this.setState({joined:true});
         }
         
-        setInterval(() => {
-            this.socket.emit('CREATE_ROOM',{});
-            if(this.state.connected===false){
-                this.setState({
-                    curTime : new Date().toLocaleString()
-                    })
-            }
-            
-        }, 5000);
-
-        this.socket.on('CREATE_ROOM_RESPONSE', (data)=>{
-            if(data.success===true){
-                this.setState({connected:true});
-            }
-        });
+        
+        if(this.state.connected===false){
+            this.socket.on('CREATE_ROOM_RESPONSE', (data)=>{
+                if(data.success===true){
+                    this.setState({connected:true});
+                }
+                else{
+                    setInterval(() => {
+                        if(this.state.connected===false){
+                            console.log('A');
+                            this.socket.emit('CREATE_ROOM',{});
+                            this.setState({
+                                curTime : new Date().toLocaleString()
+                                })
+                        }
+                        
+                    }, 5000);
+                }
+            });
+    
+        }
         
         this.socket.on('ROOM_EMPTY', ()=>{
             const newMessages = [];
@@ -67,13 +75,14 @@ class Chat extends Component{
     }
 
     sendMessage = (text) => {
+        this.sentMSG++;
         const {handle} = this.info;
         const newMessages = [...this.state.messages];
         newMessages.push({'user':handle, text, self:true});
         this.setState({
             messages: newMessages,
         });
-        this.socket.emit("SEND",{text,handle});
+        this.socket.emit("SEND",{text,handle, msgID:this.sentMSG});
     }
 
     render(){
@@ -85,9 +94,9 @@ class Chat extends Component{
                 <InfoBar room={room}></InfoBar>
                 {this.state.connected===true?
                     <div>
-                    <Messages messageslist={this.state.messages} handle={handle}></Messages>
+                    <Messages messageslist={this.state.messages} socket={this.socket} ></Messages>
                     <InputComp sendMessage={this.sendMessage}/>
-                    </div> : <div>Waiting for Other users</div>}
+                    </div> : <Waiting />}
                 </div>
             </div>    
         )

@@ -174,7 +174,27 @@
   border-bottom: 1px solid #6b6b6b;
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }
 
 .message-text{
@@ -185,6 +205,7 @@
   border-radius: 10px;
   margin-bottom: 15px;
   color: white;
+  max-width: 50vw;
 }
 
 .message-text.user-msg{

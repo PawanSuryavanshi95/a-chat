@@ -27,11 +27,11 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
 });
 
-var users = [];
-var emptyRooms = [];
-var rooms = new HashMap();
-var rID = 1;
-var userMap = new HashMap();
+var users = []; // List of disconnected users
+var emptyRooms = [];  // List of empty rooms
+var rooms = new HashMap();  // Map of rooms (quick access)
+var rID = 1;           // Room ID for next room
+var userMap = new HashMap(); // Map of users (quick access)
 
 var createRoom = (user) => {
     for(var i=0; i< users.length; i++){

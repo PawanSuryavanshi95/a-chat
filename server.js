@@ -36,6 +36,7 @@ var userMap = new HashMap(); // Map of users (quick access)
 var createRoom = (user) => {
     for(var i=0; i< users.length; i++){
         if(users[i]===user) continue;
+        if(!userMap.has(users[i])){ users.splice(i,1); i--; continue; }
         if(!userMap.get(users[i]).inRoom){
             var otherUser = users[i];
 
@@ -107,14 +108,7 @@ io.on('connection', (socket)=>{
     socket.on('CREATE_ROOM', (data)=>{
         console.log('room requested : ',socket.id);
         if(users.length>=2){
-            if(createRoom(socket.id)){
-                for(var i=0;i<users.length;i++){
-                    if(socket.id===users[i]){
-                        users.splice(i,1);
-                        return;
-                    }
-                }
-            }
+            createRoom(socket.id);
         }
         else{
             io.to(socket.id).emit('CREATE_ROOM_RESPONSE', { success:false });

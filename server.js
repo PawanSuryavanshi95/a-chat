@@ -6,7 +6,7 @@ var cors = require('cors');
 
 const app = express();
 
-const cors_white_list = ["https://epic-newton-301ecc.netlify.app/","https://epic-newton-301ecc.netlify.app", "http://localhost:3000/", "http://localhost:3000"];
+const cors_white_list = ["http://localhost:3000/", "http://localhost:3000"];
 /*app.use(cors({
     origin:cors_white_list,
     credentials:false,
@@ -36,7 +36,6 @@ var userMap = new HashMap(); // Map of users (quick access)
 var createRoom = (user) => {
     for(var i=0; i< users.length; i++){
         if(users[i]===user) continue;
-        if(!userMap.has(users[i])){ users.splice(i,1); i--; continue; }
         if(!userMap.get(users[i]).inRoom){
             var otherUser = users[i];
 
@@ -108,7 +107,14 @@ io.on('connection', (socket)=>{
     socket.on('CREATE_ROOM', (data)=>{
         console.log('room requested : ',socket.id);
         if(users.length>=2){
-            createRoom(socket.id);
+            if(createRoom(socket.id)){
+                for(var i=0;i<users.length;i++){
+                    if(socket.id===users[i]){
+                        users.splice(i,1);
+                        return;
+                    }
+                }
+            }
         }
         else{
             io.to(socket.id).emit('CREATE_ROOM_RESPONSE', { success:false });
@@ -142,6 +148,14 @@ io.on('connection', (socket)=>{
 
 app.get('/data', (req,res)=>{
     res.send({rooms, emptyRooms,userMap,users});
+})
+
+app.get('/reset', (req,res)=>{
+    users = [];
+    emptyRooms = [];
+    userMap = new HashMap(); 
+    rooms = new HashMap();
+    res.send("Reset !");
 })
 
 server.listen(port, ()=>{

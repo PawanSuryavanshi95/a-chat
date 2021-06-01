@@ -6,7 +6,7 @@ var cors = require('cors');
 
 const app = express();
 
-const cors_white_list = ["http://localhost:3000/", "http://localhost:3000"];
+const cors_white_list = ["https://epic-newton-301ecc.netlify.app/","https://epic-newton-301ecc.netlify.app", "http://localhost:3000/", "http://localhost:3000"];
 /*app.use(cors({
     origin:cors_white_list,
     credentials:false,

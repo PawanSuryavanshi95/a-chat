@@ -13,7 +13,7 @@ class Chat extends Component{
     constructor(props){
         super(props);
         this.state ={
-            ENDPOINT:"http://localhost:5000/",
+            ENDPOINT:"https://a-chat--server.herokuapp.com/",
             messages:[],
             joined:false,
             connected:false,

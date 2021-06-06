@@ -24,14 +24,18 @@ class Messages extends Component{
 
             
 
-        window.addEventListener("focus", this.onFocus)
+        window.addEventListener("click", this.onclick)
+        window.addEventListener("focus", this.onclick)
+
     }
     
     componentWillUnmount() {
-        window.removeEventListener("focus", this.onFocus)
+        window.removeEventListener("click", this.onclick)
+        window.addEventListener("focus", this.onclick)
+
     }
     
-    onFocus = () => {
+    onclick = () => {
         this.props.socket.emit('READ',{len:this.props.messageslist.length});
     }
 

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import Message from './MessageComponent';
 
 class Messages extends Component{

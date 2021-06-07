@@ -169,6 +169,7 @@
 }
 
 .message-grp{
+  height: 100%;
   padding: 10px;
   flex:1;
   border-bottom: 1px solid #6b6b6b;
@@ -251,4 +252,8 @@
   .messages-container{
     height: 80vh;
   }
+}
+
+.tab, .chat-room{
+  height:64vh;
 }

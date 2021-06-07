@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { InputGroup, InputGroupAddon, Input, Button } from 'reactstrap';
+
 class InputBar extends Component{
 
     constructor(props){

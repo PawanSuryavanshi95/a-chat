@@ -9,21 +9,60 @@ class Rooms extends Component {
             rooms:[],
             name:'',
         }
+        this.refresh = this.refresh.bind(this);
+        this.fetchrooms = this.fetchrooms.bind(this);
+
     }
 
     componentDidMount(){
-        // get list of rooms and save them in state
+        this.fetchrooms();
     }
 
+    fetchrooms =() =>{
+        const apiUrl_update = 'http://localhost:5000/getrooms';
+        fetch(apiUrl_update)
+            .then(response => response.json())
+            .then(data => {
+                console.log('Successfully got rooms:', data);
+                this.setState({rooms:data});
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
+    refresh = (e) => {
+        this.fetchrooms();
+        e.preventDefault();
+        const rooms = [...this.state.rooms];
+        this.render(
+            <div className="group-rooms">
+                {rooms.map((room)=>{
+                    return (
+                        <p>{room.name}</p>
+                    )
+                })}
+            </div>
+        // console.log("hi");
+        )
+    }
     createRoom = (e) => {
         e.preventDefault();
-        // create a room
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name:this.state.name})
+        };
+        const apiUrl = 'http://localhost:5000/newgroup';
+        fetch(apiUrl, requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                this.refresh(e);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     }
-
-    refresh = () => {
-        // Refresh the rooms list
-    }
-
     render(){
         const rooms = this.state.rooms.map(room=>{
             return <ListGroupItem>
@@ -36,13 +75,13 @@ class Rooms extends Component {
                 <Form inline>
                     <FormGroup>
                         <Label for="group-name" hidden>Email</Label>
-                        <Input type="text" name="group-name" id="group-name" placeholder="Enter Group's Name"
+                        <Input type="text" name="group-name" id="group-name" placeholder="Enter Group's Name" value={this.state.name}
                             onChange={(e)=>{this.setState({name:e.target.value})}} />
                     </FormGroup>
                     {' '}
-                    <Button onClick={(e)=>this.createRoom(e)} >Create Room</Button>
+                    <Button onClick={(e)=>{this.createRoom(e)}} >Create Room</Button>
                     </Form>
-                <Button color="primary" onClick={(e)=>{e.preventDefault(); this.refresh();}}>Refresh</Button>
+                <Button color="primary" onClick={this.refresh}>Refresh</Button>
                 <ListGroup>
                     {rooms}
                 </ListGroup>

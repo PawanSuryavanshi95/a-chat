@@ -12,7 +12,7 @@ class ChatRoom extends Component{
     constructor(props){
         super(props);
         this.state ={
-            ENDPOINT:"https://a-chat--server.herokuapp.com/",
+            ENDPOINT:"http://localhost:5000/",
             messages:[],
             joined:false,
             connected:false,
@@ -37,13 +37,13 @@ class ChatRoom extends Component{
         })
 
         if(this.state.joined===false){
-            this.socket.emit("JOIN", {handle,room});
+            this.socket.emit("JOIN", {handle, type});
             this.setState({joined:true});
+            this.socket.emit("CONNECT_ROOM",{room, type});
         }
-
         if(type==='1to1'){
             if(this.state.connected===false){
-                this.socket.on('CREATE_ROOM_RESPONSE', (data)=>{
+                this.socket.on('CONNECTED', (data)=>{
                     if(data.success===true){
                         this.setState({connected:true});
                     }
@@ -51,7 +51,7 @@ class ChatRoom extends Component{
                         setInterval(() => {
                             if(this.state.connected===false){
                                 console.log('A');
-                                this.socket.emit('CREATE_ROOM',{});
+                                this.socket.emit('CONNECT_ROOM',{room,type});
                                 this.setState({
                                     curTime : new Date().toLocaleString()
                                     })

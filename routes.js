@@ -1,30 +1,33 @@
 const express = require('express');
 
+const User = require("./models/User");
+const Room = require("./models/Room");
+
 const router = express.Router();
-const Groups = require("./models/Groups") 
+
 router.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
 });
 
-router.get('/data', (req,res)=>{
-    res.send({rooms, emptyRooms,userMap,users});
+router.get('/data', async (req,res)=>{
+    const rooms = await Room.find({});
+    const users = await User.find({});
+    res.send({rooms, users});
 })
 
-router.get('/reset', (req,res)=>{
-    users = [];
-    emptyRooms = [];
-    userMap = new HashMap(); 
-    rooms = new HashMap();
+router.get('/reset', async (req,res)=>{
+    await User.remove({});
+    await Room.remove({});
     res.send("Reset !");
 })
 // Get all group chat rooms
 router.get("/getrooms", async (req, res) => {
-	const groups = await Groups.find();
+	const groups = await Room.find();
 	res.send(groups);
 })
 
 router.post("/newgroup", async (req, res) => {
-	const group = new Groups({
+	const group = new Room({
 		name: req.body.name,
 	})
 	await group.save()

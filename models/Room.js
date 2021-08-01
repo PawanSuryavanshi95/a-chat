@@ -11,4 +11,4 @@ const schema = mongoose.Schema({
     users:[userSchema],
 });
 
-module.exports = mongoose.model("Room", schema)
+module.exports = mongoose.model("Room_a_chat", schema)

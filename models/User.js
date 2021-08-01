@@ -8,4 +8,4 @@ const schema = mongoose.Schema({
     O2O: { type : Boolean , default:false },
 });
 
-module.exports = mongoose.model("User", schema)
+module.exports = mongoose.model("User_a_chat", schema)

@@ -25,7 +25,7 @@ app.use(
   })
 )
 
-mongoose.connect('mongodb://localhost:27017/achat', {useNewUrlParser : true, useUnifiedTopology: true }, ()=>{
+mongoose.connect('mongodb+srv://pawan:5z53bhmGB3gYTzb@cluster0-okmid.gcp.mongodb.net/<dbname>?retryWrites=true&w=majority', {useNewUrlParser : true, useUnifiedTopology: true }, ()=>{
     console.log('Mongodb Connected');
 });
 

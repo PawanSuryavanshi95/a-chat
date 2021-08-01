@@ -20,7 +20,7 @@ class Rooms extends Component {
     }
 
     fetchrooms =() =>{
-        const apiUrl_update = 'http://localhost:5000/getrooms';
+        const apiUrl_update = 'https://a-chat--server.herokuapp.com/getrooms';
         fetch(apiUrl_update)
             .then(response => response.json())
             .then(data => {
@@ -56,7 +56,7 @@ class Rooms extends Component {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name:this.state.name})
         };
-        const apiUrl = 'http://localhost:5000/newgroup';
+        const apiUrl = 'https://a-chat--server.herokuapp.com/newgroup';
         fetch(apiUrl, requestOptions)
             .then(response => response.json())
             .then(data => {

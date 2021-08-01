@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Input, Button, Form } from 'reactstrap';
 import {Link} from 'react-router-dom';
 import queryString from 'query-string';
-
-import ChatRoom from './ChatRoom';
 
 class OneToOne extends Component{
 

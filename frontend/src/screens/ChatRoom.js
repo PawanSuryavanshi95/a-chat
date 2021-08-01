@@ -103,7 +103,7 @@ class ChatRoom extends Component{
     
     sendMessage = (text) => {
         this.sentMSG++;
-        const {handle,id} = queryString.parse(this.props.history.location.search);
+        const {handle} = queryString.parse(this.props.history.location.search);
         const newMessages = [...this.state.messages];
         newMessages.push({'user':handle, text, self:true});
         this.setState({
@@ -120,7 +120,7 @@ class ChatRoom extends Component{
     }
 
     render(){
-        const {handle,id} = queryString.parse(this.props.history.location.search);
+        const {handle} = queryString.parse(this.props.history.location.search);
         return (
             this.state.redirect ?
             <Redirect to={"/chat?handle="+handle} />

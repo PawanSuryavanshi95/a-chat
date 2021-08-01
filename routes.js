@@ -29,6 +29,7 @@ router.get("/getrooms", async (req, res) => {
 router.post("/newgroup", async (req, res) => {
 	const group = new Room({
 		name: req.body.name,
+        group:true,
 	})
 	await group.save()
 	res.send(group)

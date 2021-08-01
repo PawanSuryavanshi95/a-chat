@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import queryString from 'query-string';
 
-import ChatRoom from '../components/ChatRoom';
 import Rooms from '../components/Rooms';
 
 class OneToMany extends Component{
@@ -14,14 +14,20 @@ class OneToMany extends Component{
             room:'',
         }
         toast.configure();
+        this.room = '';
     }
 
     render(){
+        const {handle} = queryString.parse(this.props.history.location.search);
         return(
+            <div className="wrapper">
+            <div className="main-chat">
+                <h1 className="heading">Group Chat</h1>
+                
             <div className="tab">
-            {this.state.chat? <ChatRoom handle={this.props.handle} room={this.state.room} type="1tomany" />:
-                <Rooms join={(room) => this.setState({room:room, chat:true})} />
-            }
+            <Rooms join={(room) => { this.setState({chat:true}); this.room=room }} handle={handle} />
+            </div>
+            </div>
             </div>
         )
     }

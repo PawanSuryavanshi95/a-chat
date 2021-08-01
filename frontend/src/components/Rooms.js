@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { ListGroup, ListGroupItem, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import {Link} from 'react-router-dom';
 
 class Rooms extends Component {
 
@@ -47,6 +48,9 @@ class Rooms extends Component {
     }
     createRoom = (e) => {
         e.preventDefault();
+        this.setState({
+            name:'',
+        })
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -64,24 +68,31 @@ class Rooms extends Component {
             });
     }
     render(){
+        console.log(this.state.rooms)
+        const handle=this.props.handle;
         const rooms = this.state.rooms.map(room=>{
             return <ListGroupItem>
-                    {room.name}
-                    <Button color="primary" onClick={(e)=>{e.preventDefault(); this.props.join(room.id); }}>Join</Button>
+                <div className="room-item">
+                    <div className="room-name">{room.name}</div>
+                    <button class="button button--skoll"><Link to={"/chat/grp/room?id="+room._id+"&handle="+handle} className="no-decoration"><span>Join</span></Link></button>
+                </div>
                 </ListGroupItem>
         });
         return(
             <div className="rooms">
-                <Form inline>
-                    <FormGroup>
-                        <Label for="group-name" hidden>Email</Label>
-                        <Input type="text" name="group-name" id="group-name" placeholder="Enter Group's Name" value={this.state.name}
-                            onChange={(e)=>{this.setState({name:e.target.value})}} />
-                    </FormGroup>
-                    {' '}
-                    <Button onClick={(e)=>{this.createRoom(e)}} >Create Room</Button>
-                    </Form>
-                <Button color="primary" onClick={this.refresh}>Refresh</Button>
+                <div className="center row">
+                <div class="form__group field">
+                <input type="input" class="form__field" placeholder="Name" name="name" id='name' required 
+                    value={this.state.name} onChange={(e)=>{this.setState({name:e.target.value})}} />
+                <label for="name" class="form__label">Room's Name</label>
+                </div>
+                <button class="button button--bestia">
+                    <div class="button__bg"></div><span onClick={(e)=>{this.createRoom(e)}}>Create Room</span>
+                </button>
+                </div>
+                
+                <div className="refresh-btn"><Button color="primary" onClick={this.refresh}>Refresh</Button></div>
+
                 <ListGroup>
                     {rooms}
                 </ListGroup>

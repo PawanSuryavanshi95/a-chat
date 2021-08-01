@@ -21,7 +21,7 @@ class Home extends Component{
                             <p>Enter Your Nickname! </p>
                             <input className="nickname" placeholder="Name" type="text" onChange={(e)=>this.setState({"handle":e.target.value})}/>
                             <Link to={`/chat?handle=${handle}`}>
-                                <Button type="submit" className="match">Find my Match!</Button>
+                                <Button type="submit" className="match">Go Chatting</Button>
                             </Link>
                         </div>
                         

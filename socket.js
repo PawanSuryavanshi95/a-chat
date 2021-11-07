@@ -4,7 +4,7 @@ var HashMap = require('hashmap');
 const USER = require('./models/User');
 const ROOM = require('./models/Room');
 
-const cors_white_list = ["https://epic-newton-301ecc.netlify.app/","https://epic-newton-301ecc.netlify.app", "http://localhost:3000/", "http://localhost:3000"];
+const cors_white_list = ["https://a-chat.netlify.app/","https://a-chat.netlify.app", "http://localhost:3000/", "http://localhost:3000"];
 
 const io = socketio({
     cors: {

@@ -8,3 +8,6 @@ Feel free to check it out at : https://a-chat.netlify.app/
 [2:23 pm, 09/11/2022] Pawan suryavanshi: quantized
 [2:23 pm, 09/11/2022] Pawan suryavanshi: https://drive.google.com/file/d/1VVeL0Dssl8CrBY5iOXQtJ6aOXbKpvyZZ/view?usp=share_link
 [2:23 pm, 09/11/2022] Pawan suryavanshi: floating
+
+
+final quantized model - https://drive.google.com/file/d/189zIg6z7OTzO5E5F2eBsH-9NrjFSolYI/view?usp=sharing

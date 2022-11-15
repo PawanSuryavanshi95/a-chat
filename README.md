@@ -11,3 +11,6 @@ Feel free to check it out at : https://a-chat.netlify.app/
 
 
 final quantized model - https://drive.google.com/file/d/189zIg6z7OTzO5E5F2eBsH-9NrjFSolYI/view?usp=sharing
+
+
+https://drive.google.com/drive/folders/1PmNdg3jcLi-2D0anVrsKsuWkXc1PLtFc?usp=sharing
